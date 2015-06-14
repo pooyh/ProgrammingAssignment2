@@ -29,4 +29,27 @@ makeCacheMatrix <- function(x = matrix()) {
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
+	#calling getInverse func
+	inv <- x$getInverse()
+	
+	#if inv is not an empty matrix then just return it
+	if(!is.null(inv)){
+		message("getting cached matrix")
+		return (inv)
+	}
+	
+	#else get the cached matrix
+	data<-x$getMatrix()
+	inv<-solve(data) #solve the matrix
+	x$setInverse(inv)#set it to the obj
+	inv#return the result
+	
 }
+
+test <- matrix(runif(9,1,100),3,3)
+testCached <- makeCacheMatrix(test)
+testInv <- cacheSolve(testCached)
+testInv <- cacheSolve(testCached)
+testInv <- cacheSolve(testCached)
+testInv <- cacheSolve(testCached)
+testInv <- cacheSolve(testCached)
